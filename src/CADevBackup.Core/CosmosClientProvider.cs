@@ -20,10 +20,7 @@ public class CosmosClientProvider<TOptions> : ICosmosClientProvider<TOptions>
         _cosmosDBKey = _cosmosDBOptions.DatabaseKey ?? throw new ArgumentNullException(nameof(cosmosDBOptions.Value.DatabaseKey));
 
         _cosmosClient = new Lazy<CosmosClient>(() => new CosmosClient(accountEndpoint: _cosmosDBEndpoint.AbsoluteUri, authKeyOrResourceToken: _cosmosDBKey), LazyThreadSafetyMode.PublicationOnly);
-        DatabaseId = _cosmosDBOptions.DatabaseId ?? throw new ArgumentNullException(nameof(_cosmosDBOptions.DatabaseId));
     }
-
-    public string DatabaseId { get; }
 
     public TOptions Options => _cosmosDBOptions;
 
