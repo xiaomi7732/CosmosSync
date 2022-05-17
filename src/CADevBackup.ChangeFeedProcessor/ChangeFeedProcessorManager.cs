@@ -7,8 +7,8 @@ namespace CADevBackup.ChangeFeedProcessing;
 
 internal class ChangeFeedProcessorManager : BackgroundService
 {
-    private readonly ISourceCosmosClientProvider _sourceCosmosClient;
-    private readonly IDestCosmosClientProvider _destCosmosClient;
+    private readonly ICosmosClientProvider<SourceCosmosDBOptions> _sourceCosmosClient;
+    private readonly ICosmosClientProvider<DestCosmosDBOptions> _destCosmosClient;
     private readonly ILogger _logger;
     private readonly BackupOptions _backupOptions;
 
@@ -18,8 +18,8 @@ internal class ChangeFeedProcessorManager : BackgroundService
 
     public ChangeFeedProcessorManager(
         IOptions<BackupOptions> backupOptions,
-        ISourceCosmosClientProvider sourceCosmosClient,
-        IDestCosmosClientProvider destCosmosClient,
+        ICosmosClientProvider<SourceCosmosDBOptions> sourceCosmosClient,
+        ICosmosClientProvider<DestCosmosDBOptions> destCosmosClient,
         ILogger<ChangeFeedProcessorManager> logger)
     {
         _backupOptions = backupOptions?.Value ?? throw new ArgumentNullException(nameof(backupOptions));
@@ -48,11 +48,11 @@ internal class ChangeFeedProcessorManager : BackgroundService
             Id = leaseContainerName,
             PartitionKeyPath = "/id",
         };
-        Database destDatabase = _destCosmosClient.GetCosmosClient().GetDatabase(_destCosmosClient.DatabaseId);
+        Database destDatabase = _destCosmosClient.GetCosmosClient().GetDatabase(_destCosmosClient.Options.DatabaseId);
         await destDatabase.CreateContainerIfNotExistsAsync(leaseContainerProperties);
-        Container leaseContainer = _destCosmosClient.GetCosmosClient().GetContainer(_destCosmosClient.DatabaseId, leaseContainerName);
+        Container leaseContainer = _destCosmosClient.GetCosmosClient().GetContainer(_destCosmosClient.Options.DatabaseId, leaseContainerName);
 
-        ChangeFeedProcessor changeFeedProcessor = _sourceCosmosClient.GetCosmosClient().GetContainer(_sourceCosmosClient.DatabaseId, _backupOptions.SourceContainerName)
+        ChangeFeedProcessor changeFeedProcessor = _sourceCosmosClient.GetCosmosClient().GetContainer(_sourceCosmosClient.Options.DatabaseId, _backupOptions.SourceContainerName)
             .GetChangeFeedProcessorBuilder<dynamic>(processorName: "scheduleSubscriptionBackup", onChangesDelegate: HandleChangesAsync)
             .WithInstanceName("consoleHost")
             .WithLeaseContainer(leaseContainer)
@@ -96,13 +96,13 @@ internal class ChangeFeedProcessorManager : BackgroundService
                 PartitionKeyPath = _backupOptions.DestContainerPartitionKeyPath,
             };
 
-            Database destDatabase = _destCosmosClient.GetCosmosClient().GetDatabase(_destCosmosClient.DatabaseId);
+            Database destDatabase = _destCosmosClient.GetCosmosClient().GetDatabase(_destCosmosClient.Options.DatabaseId);
             await destDatabase.CreateContainerIfNotExistsAsync(leaseContainerProperties);
-            destContainer = _destCosmosClient.GetCosmosClient().GetContainer(_destCosmosClient.DatabaseId, _backupOptions.DestContainerName);
+            destContainer = _destCosmosClient.GetCosmosClient().GetContainer(_destCosmosClient.Options.DatabaseId, _backupOptions.DestContainerName);
             _destContainerExist = true;
         }
 
-        destContainer = destContainer ?? _destCosmosClient.GetCosmosClient().GetContainer(_destCosmosClient.DatabaseId, _backupOptions.DestContainerName);
+        destContainer = destContainer ?? _destCosmosClient.GetCosmosClient().GetContainer(_destCosmosClient.Options.DatabaseId, _backupOptions.DestContainerName);
         foreach (dynamic item in changes)
         {
             _logger.LogInformation("{sourceId} => {destId}", (string)item.id, (string)item.id);

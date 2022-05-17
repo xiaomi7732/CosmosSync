@@ -21,4 +21,8 @@
         <None Include="./appsettings.jsonc" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\CADevBackup.Core\CADevBackup.Core.csproj" />
+    </ItemGroup>
+
 </Project>

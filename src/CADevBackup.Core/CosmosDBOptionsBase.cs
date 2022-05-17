@@ -1,3 +1,5 @@
+using System;
+
 namespace CADevBackup.ChangeFeedProcessing;
 
 public class CosmosDBOptionsBase

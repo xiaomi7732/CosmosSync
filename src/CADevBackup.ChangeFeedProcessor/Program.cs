@@ -8,8 +8,6 @@ namespace CADevBackup.ChangeFeedProcessing // Note: actual namespace depends on 
 {
     internal class Program
     {
-        public delegate ICosmosClientProvider ServiceResolver(CosmosDBRole role);
-
         static async Task Main(string[] args)
         {
             IHost host = Host.CreateDefaultBuilder(args)
@@ -47,16 +45,7 @@ namespace CADevBackup.ChangeFeedProcessing // Note: actual namespace depends on 
             services.AddOptions<SourceCosmosDBOptions>().Bind(configuration.GetSection(SourceCosmosDBOptions.SectionName));
             services.AddOptions<DestCosmosDBOptions>().Bind(configuration.GetSection(DestCosmosDBOptions.SectionName));
 
-            services.TryAddSingleton<ISourceCosmosClientProvider, CosmosClientProvider<SourceCosmosDBOptions>>();
-            services.TryAddSingleton<IDestCosmosClientProvider, CosmosClientProvider<DestCosmosDBOptions>>();
-
-            services.TryAddTransient<ServiceResolver>(p => r => r switch
-            {
-                CosmosDBRole.Source => p.GetRequiredService<ISourceCosmosClientProvider>(),
-                CosmosDBRole.Dest => p.GetRequiredService<IDestCosmosClientProvider>(),
-                _ => throw new KeyNotFoundException($"Unsupported cosmos db role: {r}"),
-            });
-
+            services.TryAddSingleton(typeof(ICosmosClientProvider<>), typeof(CosmosClientProvider<>));
             services.AddHostedService<ChangeFeedProcessorManager>();
         }
     }

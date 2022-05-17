@@ -1,9 +1,11 @@
+using System;
+using System.Threading;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Options;
 
 namespace CADevBackup.ChangeFeedProcessing;
 
-internal class CosmosClientProvider<TOptions> : ISourceCosmosClientProvider, IDestCosmosClientProvider
+public class CosmosClientProvider<TOptions> : ICosmosClientProvider<TOptions>
     where TOptions : CosmosDBOptionsBase, new()
 {
     private readonly TOptions _cosmosDBOptions;
@@ -22,6 +24,8 @@ internal class CosmosClientProvider<TOptions> : ISourceCosmosClientProvider, IDe
     }
 
     public string DatabaseId { get; }
+
+    public TOptions Options => _cosmosDBOptions;
 
     public CosmosClient GetCosmosClient() => _cosmosClient.Value;
 }
