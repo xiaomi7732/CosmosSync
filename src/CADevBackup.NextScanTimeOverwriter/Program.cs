@@ -23,7 +23,7 @@ namespace CADevBackup.NextScanTimeOverwriter
             // Logging
             serviceCollection.AddLogging(logging =>
             {
-                logging.AddConfiguration(configuration);
+                logging.AddConfiguration(configuration.GetSection("Logging"));
                 logging.AddSimpleConsole(opt =>
                 {
                     opt.SingleLine = true;
@@ -35,13 +35,15 @@ namespace CADevBackup.NextScanTimeOverwriter
             using (ServiceProvider provider = RegisterServices(serviceCollection, configuration).BuildServiceProvider())
             {
                 Overwriter engine = provider.GetRequiredService<Overwriter>();
-                await engine.RunAsync(DateTime.UtcNow.AddMinutes(30), TimeSpan.FromHours(6), default);
+                await engine.RunAsync(DateTime.UtcNow, default);
             }
         }
 
         private static IServiceCollection RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddOptions<NextScanTimeOptions>().Bind(configuration.GetSection(NextScanTimeOptions.SectionName));
             services.AddOptions<TargetScheduleOptions>().Bind(configuration.GetSection(TargetScheduleOptions.SectionName));
+
             services.TryAddCADevBackupCoreServices();
             services.TryAddSingleton<Overwriter>();
             return services;
