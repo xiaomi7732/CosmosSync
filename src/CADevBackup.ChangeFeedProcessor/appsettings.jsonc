@@ -4,5 +4,11 @@
             "Default": "Information",
             "Microsoft": "Warning"
         }
+    },
+    "BackupOptions": {
+        "SourceContainerName": "SubscriptionSchedule",
+        "DestContainerName": "SubscriptionSchedule",
+        "DestContainerPartitionKeyPath": "/PartitionKey",
+        "LeaseContainerName": "SubscriptionScheduleLease"
     }
 }
