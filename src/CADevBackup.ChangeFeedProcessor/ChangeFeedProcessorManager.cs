@@ -1,4 +1,5 @@
 using Microsoft.Azure.Cosmos;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -10,6 +11,10 @@ internal class ChangeFeedProcessorManager : BackgroundService
     private readonly IDestCosmosClientProvider _destCosmosClient;
     private readonly ILogger _logger;
     private readonly BackupOptions _backupOptions;
+
+    private bool _destContainerExist;
+
+    private ChangeFeedProcessor? _feedProcessor;
 
     public ChangeFeedProcessorManager(
         IOptions<BackupOptions> backupOptions,
@@ -23,7 +28,15 @@ internal class ChangeFeedProcessorManager : BackgroundService
         _destCosmosClient = destCosmosClient ?? throw new ArgumentNullException(nameof(destCosmosClient));
     }
 
-    public async Task<ChangeFeedProcessor> StartChangeFeedProcessorAsync(string leaseContainerName)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        _feedProcessor = await CreateChangeFeedProcessorAsync(_backupOptions.LeaseContainerName);
+        _logger.LogInformation("Starting Change Feed Processor...");
+        await _feedProcessor.StartAsync();
+        _logger.LogInformation("Change Feed Processor started.");
+    }
+
+    private async Task<ChangeFeedProcessor> CreateChangeFeedProcessorAsync(string leaseContainerName)
     {
         if (string.IsNullOrWhiteSpace(leaseContainerName))
         {
@@ -33,7 +46,7 @@ internal class ChangeFeedProcessorManager : BackgroundService
         ContainerProperties leaseContainerProperties = new ContainerProperties()
         {
             Id = leaseContainerName,
-            PartitionKeyPath = "/id"
+            PartitionKeyPath = "/id",
         };
         Database destDatabase = _destCosmosClient.GetCosmosClient().GetDatabase(_destCosmosClient.DatabaseId);
         await destDatabase.CreateContainerIfNotExistsAsync(leaseContainerProperties);
@@ -44,12 +57,17 @@ internal class ChangeFeedProcessorManager : BackgroundService
             .WithInstanceName("consoleHost")
             .WithLeaseContainer(leaseContainer)
             .WithStartTime(DateTime.MinValue.ToUniversalTime())
+            .WithErrorNotification(OnError)
             .Build();
 
-        _logger.LogInformation("Starting Change Feed Processor...");
-        await changeFeedProcessor.StartAsync();
-        _logger.LogInformation("Change Feed Processor started.");
         return changeFeedProcessor;
+    }
+
+    private Task OnError(string leaseToken, Exception exception)
+    {
+        _destContainerExist = false;
+        _logger.LogError(exception, $"Error processing lease: {leaseToken}", leaseToken);
+        return Task.CompletedTask;
     }
 
     /// <summary>
@@ -68,11 +86,27 @@ internal class ChangeFeedProcessorManager : BackgroundService
             _logger.LogInformation($"Change Feed request took longer than expected. Diagnostics:" + context.Diagnostics.ToString());
         }
 
-        Container toContainer = _destCosmosClient.GetCosmosClient().GetContainer(_destCosmosClient.DatabaseId, _backupOptions.DestContainerName);
+        Container? destContainer = null;
+        if (!_destContainerExist)
+        {
+            _logger.LogWarning("New target container. Is this expected?");
+            ContainerProperties leaseContainerProperties = new ContainerProperties()
+            {
+                Id = _backupOptions.DestContainerName,
+                PartitionKeyPath = _backupOptions.DestContainerPartitionKeyPath,
+            };
+
+            Database destDatabase = _destCosmosClient.GetCosmosClient().GetDatabase(_destCosmosClient.DatabaseId);
+            await destDatabase.CreateContainerIfNotExistsAsync(leaseContainerProperties);
+            destContainer = _destCosmosClient.GetCosmosClient().GetContainer(_destCosmosClient.DatabaseId, _backupOptions.DestContainerName);
+            _destContainerExist = true;
+        }
+
+        destContainer = destContainer ?? _destCosmosClient.GetCosmosClient().GetContainer(_destCosmosClient.DatabaseId, _backupOptions.DestContainerName);
         foreach (dynamic item in changes)
         {
             _logger.LogInformation("{sourceId} => {destId}", (string)item.id, (string)item.id);
-            await toContainer.UpsertItemAsync<dynamic>(item);
+            await destContainer.UpsertItemAsync<dynamic>(item);
         }
 
         _logger.LogInformation("Finished handling changes.");
