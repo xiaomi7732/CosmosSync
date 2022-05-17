@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <ProjectReference Include="..\CADevBackup.Core\CADevBackup.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CodeWithSaar.Extensions.Logging.File" Version="1.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <UserSecretsId>af2cf6ee-73ea-4404-8913-bfd1c4a3339d</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Build action is `None`, and the option for copy to output directory could be `Always` or `PreserveNewest` -->
+        <None Include="./appsettings.jsonc" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+</Project>

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CADevBackup.Core;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
@@ -41,11 +42,12 @@ namespace CADevBackup.ChangeFeedProcessing // Note: actual namespace depends on 
         {
             IConfiguration configuration = context.Configuration;
 
+            services.TryAddCADevBackupCoreServices();
+
             services.AddOptions<BackupOptions>().Bind(configuration.GetSection(BackupOptions.SectionName));
             services.AddOptions<SourceCosmosDBOptions>().Bind(configuration.GetSection(SourceCosmosDBOptions.SectionName));
             services.AddOptions<DestCosmosDBOptions>().Bind(configuration.GetSection(DestCosmosDBOptions.SectionName));
-
-            services.TryAddSingleton(typeof(ICosmosClientProvider<>), typeof(CosmosClientProvider<>));
+            
             services.AddHostedService<ChangeFeedProcessorManager>();
         }
     }
