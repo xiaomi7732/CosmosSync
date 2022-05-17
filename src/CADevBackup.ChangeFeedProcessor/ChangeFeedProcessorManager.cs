@@ -89,7 +89,7 @@ internal class ChangeFeedProcessorManager : BackgroundService
         Container? destContainer = null;
         if (!_destContainerExist)
         {
-            _logger.LogWarning("New target container. Is this expected?");
+            _logger.LogWarning("Ensure target container of {containerName} exists. Is this expected?", _backupOptions.DestContainerName);
             ContainerProperties leaseContainerProperties = new ContainerProperties()
             {
                 Id = _backupOptions.DestContainerName,
