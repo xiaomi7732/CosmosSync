@@ -1,8 +1,8 @@
-using CADevBackup.ChangeFeedProcessing;
+using CodeWithSaar.CosmosDBSync.CLI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace CADevBackup.Core;
+namespace CodeWithSaar.CosmosDBSync.Core;
 
 public static class CADevBackupCoreRegister
 {

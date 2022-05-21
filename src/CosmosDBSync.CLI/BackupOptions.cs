@@ -1,4 +1,4 @@
-namespace CADevBackup.ChangeFeedProcessing;
+namespace CodeWithSaar.CosmosDBSync.CLI;
 
 public class BackupOptions
 {
@@ -8,4 +8,12 @@ public class BackupOptions
     public string DestContainerName { get; set; } = "SubscriptionSchedule2";
     public string DestContainerPartitionKeyPath { get; set; } = "/PartitionKey";
     public string LeaseContainerName { get; set; } = "SubscriptionScheduleLease";
+
+    public void UpdateFrom(BackupOptions other)
+    {
+        SourceContainerName = other.SourceContainerName;
+        DestContainerName = other.DestContainerName;
+        DestContainerPartitionKeyPath = other.DestContainerPartitionKeyPath;
+        LeaseContainerName = other.LeaseContainerName;
+    }
 }

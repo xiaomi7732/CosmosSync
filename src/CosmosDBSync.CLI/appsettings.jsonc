@@ -6,9 +6,9 @@
         }
     },
     "BackupOptions": {
-        "SourceContainerName": "SubscriptionSchedule",
-        "DestContainerName": "SubscriptionSchedule3",
+        "SourceContainerName": "SubscriptionSchedule4",
+        "DestContainerName": "SubscriptionSchedule5",
         "DestContainerPartitionKeyPath": "/PartitionKey",
-        "LeaseContainerName": "SubscriptionScheduleLease"
+        "LeaseContainerName": "SubscriptionSchedule5Lease"
     }
 }

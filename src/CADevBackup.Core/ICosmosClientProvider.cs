@@ -1,6 +1,6 @@
 using Microsoft.Azure.Cosmos;
 
-namespace CADevBackup.ChangeFeedProcessing;
+namespace CodeWithSaar.CosmosDBSync.CLI;
 
 public interface ICosmosClientProvider<TOptions>
 {

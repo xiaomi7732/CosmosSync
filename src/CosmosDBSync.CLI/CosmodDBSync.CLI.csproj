@@ -2,14 +2,17 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
+        <AssemblyName>cds</AssemblyName>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <UseAppHost>true</UseAppHost>
         <UserSecretsId>a700ad1c-dfbf-427b-ace8-61fcd1731874</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="CodeWithSaar.Extensions.Logging.File" Version="1.0.0" />
+        <PackageReference Include="CommandLineParser" Version="2.9.1" />
         <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.27.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
