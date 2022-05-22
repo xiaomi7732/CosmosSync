@@ -4,6 +4,8 @@
 
 Uses change feed processor to sync up Azure Cosmos DB containers easily.
 
+[![CI](https://github.com/xiaomi7732/CosmosSync/actions/workflows/ci.yml/badge.svg)](https://github.com/xiaomi7732/CosmosSync/actions/workflows/ci.yml)
+
 ## Quick Start
 
 1. Download the binary
