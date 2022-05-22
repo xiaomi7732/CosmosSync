@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CodeWithSaar.CosmosDBSync.Core;
 
-public static class CADevBackupCoreRegister
+public static class CosmosDBSyncCoreRegister
 {
     public static IServiceCollection TryAddCADevBackupCoreServices(this IServiceCollection services)
     {

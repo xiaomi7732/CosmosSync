@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <AssemblyName>cds</AssemblyName>
+        <AssemblyName>cosmossync</AssemblyName>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -25,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CADevBackup.Core\CADevBackup.Core.csproj" />
+      <ProjectReference Include="..\CosmosDBSync.Core\CosmosSync.Core.csproj" />
     </ItemGroup>
 
 </Project>
