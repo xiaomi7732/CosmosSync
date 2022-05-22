@@ -3,7 +3,9 @@
 
 ## Overview
 
-Uses change feed processor to sync up Azure Cosmos DB containers easily. This is part of [CodeWithSaar](https://github.com/xiaomi7732/CodeWithSaar). If you find it useful, please star this repo.
+Uses change feed processor to sync up Azure Cosmos DB containers easily.
+
+_This is part of [CodeWithSaar](https://github.com/xiaomi7732/CodeWithSaar). If you find it useful, please star this repo._
 
 ## Quick Start
 
