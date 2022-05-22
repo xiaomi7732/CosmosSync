@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 6.x
     - name: Restore dependencies
-      run: dotnet restore CosmosDBSync.CLI
+      run: dotnet restore src/CosmosDBSync.CLI
     - name: Build
-      run: dotnet build CosmosDBSync.CLI --no-restore
+      run: dotnet build src/CosmosDBSync.CLI --no-restore
 #    - name: Test
 #      run: dotnet test --no-build --verbosity normal
