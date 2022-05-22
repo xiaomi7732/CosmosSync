@@ -102,14 +102,14 @@ Sync your CosmosDB containers with ease.
 ========================================
 Interactive mode: False
 info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Starting backup service.
-info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Checking source database ChangeAnalysisData
-info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Checking source container SubscriptionSchedule6
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Checking source database TestDB
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Checking source container TestContainer
 info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Prepare the destination database
-info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Target database ChangeAnalysisData exists.
-info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Prepare target container SubscriptionSchedule7
-info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Target container SubscriptionSchedule7 created
-info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Prepare lease container SubscriptionSchedule7Lease...
-info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Lease container SubscriptionSchedule7Lease created.
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Target database TestDB exists.
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Prepare target container TargetContainer
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Target container TargetContainer created
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Prepare lease container TargetContainerLease...
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Lease container TargetContainerLease created.
 info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Starting Change Feed Processor...
 info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Watching the change feed ...
 info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Started handling a batch of changes for lease 0...
