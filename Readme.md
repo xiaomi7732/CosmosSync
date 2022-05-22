@@ -1,10 +1,9 @@
 # Cosmos DB container sync app
+[![CI](https://github.com/xiaomi7732/CosmosSync/actions/workflows/ci.yml/badge.svg)](https://github.com/xiaomi7732/CosmosSync/actions/workflows/ci.yml)
 
 ## Overview
 
-Uses change feed processor to sync up Azure Cosmos DB containers easily.
-
-[![CI](https://github.com/xiaomi7732/CosmosSync/actions/workflows/ci.yml/badge.svg)](https://github.com/xiaomi7732/CosmosSync/actions/workflows/ci.yml)
+Uses change feed processor to sync up Azure Cosmos DB containers easily. This is part of [CodeWithSaar](https://github.com/xiaomi7732/CodeWithSaar). If you find it useful, please star this repo.
 
 ## Quick Start
 
