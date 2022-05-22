@@ -9,7 +9,7 @@ _This is part of [CodeWithSaar](https://github.com/xiaomi7732/CodeWithSaar). If 
 
 ## Quick Start
 
-1. Download the binary
+1. [Download the binary](https://github.com/xiaomi7732/CosmosSync/releases)
 1. Run:
 
     ```shell
