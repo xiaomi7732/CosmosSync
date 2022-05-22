@@ -6,7 +6,7 @@ namespace CodeWithSaar.CosmosDBSync.Core;
 
 public static class CosmosDBSyncCoreRegister
 {
-    public static IServiceCollection TryAddCADevBackupCoreServices(this IServiceCollection services)
+    public static IServiceCollection TryAddCosmosDBSyncCoreServices(this IServiceCollection services)
     {
         services.TryAddSingleton(typeof(ICosmosClientProvider<>), typeof(CosmosClientProvider<>));
         return services;

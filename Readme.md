@@ -90,22 +90,42 @@ Notices: CLI in docker container runs in interactive mode by default.
     ./cosmossync.exe
     ```
 
-    Logs look like this:
-
-    ```shell
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] Starting Change Feed Processor...
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] Change Feed Processor started.
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] Started handling changes for lease 0...
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] Change Feed request consumed 1 RU.
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] SessionToken $0:6#1132055#2=468290
-    warn: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] New target container. Is this expected?
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] 464a7173-59df-4074-b17f-bdea38b2ec8b => 464a7173-59df-4074-b17f-bdea38b2ec8b
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] Finished handling changes.
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] Started handling changes for lease 0...
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] Change Feed request consumed 1 RU.
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] SessionToken $0:6#1132056#2=468290
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] 464a7173-59df-4074-b17f-bdea38b2ec8b => 464a7173-59df-4074-b17f-bdea38b2ec8b
-    info: CADevBackup.ChangeFeedProcessing.ChangeFeedProcessorManager[0] Finished handling changes.
-    ```
-
 </details>
+
+## Logs
+
+When it is running, you will see logs like this
+
+```shell
+========================================
+Sync your CosmosDB containers with ease.
+========================================
+Interactive mode: False
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Starting backup service.
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Checking source database ChangeAnalysisData
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Checking source container SubscriptionSchedule6
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Prepare the destination database
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Target database ChangeAnalysisData exists.
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Prepare target container SubscriptionSchedule7
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Target container SubscriptionSchedule7 created
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Prepare lease container SubscriptionSchedule7Lease...
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Lease container SubscriptionSchedule7Lease created.
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Starting Change Feed Processor...
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Watching the change feed ...
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Started handling a batch of changes for lease 0...
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Change Feed request consumed 1 RU.
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] SessionToken $0:-1#12
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]                                     From => To
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]     ebff9be1-1921-4cb4-b4a0-17dea07eed5c => ebff9be1-1921-4cb4-b4a0-17dea07eed5c
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]     b16ab8c1-fdbd-41c4-83f8-b8c3f5ae5e37 => b16ab8c1-fdbd-41c4-83f8-b8c3f5ae5e37
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]     3baaca3b-be80-4a12-b743-f853c0d545e3 => 3baaca3b-be80-4a12-b743-f853c0d545e3
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]     464a7173-59df-4074-b17f-bdea38b2ec8b => 464a7173-59df-4074-b17f-bdea38b2ec8b
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]     27d38ff4-8b0d-4018-91f7-131357693be8 => 27d38ff4-8b0d-4018-91f7-131357693be8
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]     e4f375b9-ff75-4414-a972-7a7f52e032ea => e4f375b9-ff75-4414-a972-7a7f52e032ea
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]     72383ac7-d6f4-4a5e-bf56-b172f2fdafb2 => 72383ac7-d6f4-4a5e-bf56-b172f2fdafb2
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]     098d478a-cec4-474a-8b48-30861a575d1b => 098d478a-cec4-474a-8b48-30861a575d1b
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]     f2c79f41-806e-4657-83c4-0ff160c60b24 => f2c79f41-806e-4657-83c4-0ff160c60b24
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]     bbe41737-1ade-44df-8e33-217f11b8b452 => bbe41737-1ade-44df-8e33-217f11b8b452
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0]     14fe365f-fef8-44d1-b828-86f581261142 => 14fe365f-fef8-44d1-b828-86f581261142
+info: CodeWithSaar.CosmosDBSync.CLI.ChangeFeedProcessorManager[0] Finished handling a batch of changes.
+```

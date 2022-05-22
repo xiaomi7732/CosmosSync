@@ -59,7 +59,7 @@ namespace CodeWithSaar.CosmosDBSync.CLI // Note: actual namespace depends on the
 
             IConfiguration configuration = context.Configuration;
 
-            services.TryAddCADevBackupCoreServices();
+            services.TryAddCosmosDBSyncCoreServices();
 
             if (_isInteractiveMode)
             {
